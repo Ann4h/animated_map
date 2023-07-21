@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animated Map</title>
+  <!-- Include Leaflet CSS and JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+ <style>
+ 
+ 
+ <style>
+    /* CSS styles (pretty styling) */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #c0c0c0;
+    }
+
+    .footer {
+      background-color: #00ffff;
+      color: #ff0000;
+      text-align: center;
+      padding: 10px;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            width: 100%;
+            height: 100vh;
+        }
+    </style>
+<body>
+ <main>
+    <h2>Major Towns in Kenya</h2>
+   
+    <p>This animated map provides a comprehensive view of prominent Kenyan towns, allowing you to explore each town's location and spatial distribution in the country</p>
+	
+  </main>
+  <!-- Your map will be displayed here -->
+  <div id="map" style="height: 500px;"></div>
+ <div class="footer">
+    <p>&copy; ENC221-0102/2018</p>
+  </div>
+  <script>
+    // Create an array of coordinates for the marker's path
+    var pathCoordinates = [
+      [0.4611, 34.1102],
+	  [-0.0917, 34.7680],
+      [-0.3031, 36.0800],
+      [-1.2921, 36.8219],
+	  [-0.6773, 34.7796], 
+      [-4.0435, 39.6682],
+	  [-0.5143, 35.2698],
+	  [-1.0388, 37.0834]
+      // Add more coordinates for the marker's path
+    ];
+
+    // Initialize the map
+    var map = L.map('map').setView([-1.2921, 36.8219], 7);
+
+    // Add the map tiles (OpenStreetMap tiles)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+    // Create a marker with the initial coordinate
+    var marker = L.marker(pathCoordinates[0]).addTo(map);
+
+    // Function to animate the marker
+    function animateMarker(index) {
+      if (index >= pathCoordinates.length) {
+        index = 0; // Reset the index when the marker reaches the end of the path
+      }
+
+      var point = pathCoordinates[index];
+
+      // Update the marker's position to the current coordinate
+      marker.setLatLng(point);
+
+      // Request the next animation frame after a delay of 1000ms (1 second)
+      setTimeout(function() {
+        animateMarker(index + 1);
+      }, 1000);
+    }
+
+    // Start the animation with the first coordinate at index 0
+    animateMarker(0);
+  </script>
+</body>
+</html>
